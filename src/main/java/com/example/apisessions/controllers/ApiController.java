@@ -4,10 +4,7 @@ package com.example.apisessions.controllers;
 import com.example.apisessions.models.User;
 import com.example.apisessions.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,12 +17,14 @@ public class ApiController {
     @Autowired
     UserRepository userRepo;
 
+    @CrossOrigin
     @GetMapping("/user")
     public User getUser(HttpSession session) {
         return (User)session.getAttribute(USER_KEY);
     }
 
     // persist (aka save) the user they sent us
+    @CrossOrigin
     @PostMapping("/user")
     public void signUp(@RequestBody User user, HttpServletResponse response) throws IOException {
         // if we can't find a user with the name specified..
@@ -38,6 +37,7 @@ public class ApiController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/login")
     public void login(@RequestBody User user, HttpSession session, HttpServletResponse response) throws IOException {
         // HEY, REPOSITORY
